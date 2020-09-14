@@ -4,10 +4,8 @@ import {
   searchNewsSuccess,
   searchNewsFailure,
 } from "../actions/actionCreators";
-import { SEARCH_NEWS_REQUEST } from "../actions/actionTypes";
+import { SEARCH_NEWS_SUCCESS } from "../actions/actionTypes";
 import { searchNews } from "../api/index";
-console.log(searchNews);
-console.log(process.env.REACT_APP_SEARCH_UR);
 
 function filterChangeSearchAction({ type, payload }) {
   // return type === CHANGE_SEARCH_FIELD && payload.search.trim() !== "";
@@ -35,6 +33,7 @@ function* handleSearchSkillsSaga(action) {
       searchNews,
       action.payload.search
     );
+    console.log(data);
 
     yield put(searchNewsSuccess(data));
   } catch (e) {
@@ -44,7 +43,7 @@ function* handleSearchSkillsSaga(action) {
 
 // watcher
 function* watchSearchSkillsSaga() {
-  yield takeLatest(SEARCH_NEWS_REQUEST, handleSearchSkillsSaga);
+  yield takeLatest(SEARCH_NEWS_SUCCESS, handleSearchSkillsSaga);
 }
 
 export default function* saga() {
