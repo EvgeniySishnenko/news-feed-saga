@@ -1,53 +1,40 @@
-import { takeLatest, put, spawn, debounce, retry } from "redux-saga/effects";
+import {
+  takeLatest,
+  put,
+  spawn,
+  debounce,
+  retry,
+  call,
+  takeEvery,
+  delay,
+} from "redux-saga/effects";
 import {
   searchNewsRequest,
   searchNewsSuccess,
   searchNewsFailure,
 } from "../actions/actionCreators";
-import { SEARCH_NEWS_REQUEST } from "../actions/actionTypes";
+import {
+  SEARCH_NEWS_REQUEST,
+  SEARCH_NEWS_SUCCESS,
+} from "../actions/actionTypes";
 import { searchNews } from "../api/index";
-console.log(searchNews);
-console.log(process.env.REACT_APP_SEARCH_UR);
-
-function filterChangeSearchAction({ type, payload }) {
-  // return type === CHANGE_SEARCH_FIELD && payload.search.trim() !== "";
-  return true;
-}
 
 // worker
-function* handleChangeSearchSaga(action) {
-  yield put(searchNewsRequest(action.payload.search));
-}
-
-// watcher
-function* watchChangeSearchSaga() {
-  yield debounce(100, filterChangeSearchAction, handleChangeSearchSaga);
-}
-
-// worker
-function* handleSearchSkillsSaga(action) {
+export function* workerLoadData() {
   try {
-    const retryCount = 3;
-    const retryDelay = 1 * 1000; // ms
-    const data = yield retry(
-      retryCount,
-      retryDelay,
-      searchNews,
-      action.payload.search
-    );
-
+    const data = yield call(searchNews);
     yield put(searchNewsSuccess(data));
-  } catch (e) {
-    yield put(searchNewsFailure(e.message));
+  } catch (error) {
+    yield call(workerLoadData);
+    return yield delay(3000);
   }
 }
 
 // watcher
-function* watchSearchSkillsSaga() {
-  yield takeLatest(SEARCH_NEWS_REQUEST, handleSearchSkillsSaga);
+export function* watchLoadData() {
+  yield takeEvery(SEARCH_NEWS_SUCCESS, workerLoadData);
 }
 
 export default function* saga() {
-  yield spawn(watchChangeSearchSaga);
-  yield spawn(watchSearchSkillsSaga);
+  yield spawn(watchLoadData);
 }
