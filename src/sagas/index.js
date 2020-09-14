@@ -1,13 +1,4 @@
-import {
-  takeLatest,
-  put,
-  spawn,
-  debounce,
-  retry,
-  call,
-  takeEvery,
-  delay,
-} from "redux-saga/effects";
+import { put, spawn, call, takeEvery, delay } from "redux-saga/effects";
 import {
   searchNewsRequest,
   searchNewsSuccess,
@@ -26,7 +17,7 @@ export function* workerLoadData() {
     yield put(searchNewsSuccess(data));
   } catch (error) {
     yield call(workerLoadData);
-    return yield delay(3000);
+    return yield delay(100);
   }
 }
 
