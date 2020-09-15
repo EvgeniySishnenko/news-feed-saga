@@ -17,7 +17,7 @@ export function* workerLoadData() {
     yield put(searchNewsSuccess(data));
   } catch (error) {
     yield call(workerLoadData);
-    return yield delay(100);
+    // return yield delay(100);
   }
 }
 
