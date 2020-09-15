@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row } from "react-bootstrap";
+
 import { useDispatch } from "react-redux";
 import { searchNewsSuccess, searchNewsRequest } from "./actions/actionCreators";
 
@@ -14,6 +15,7 @@ function App() {
     e.preventDefault();
     // dispatch(moreNewsFiled());
   }
+
   return (
     <div className="App">
       <Container>
