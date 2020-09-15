@@ -5,9 +5,8 @@ import {
   MORE_NEWS_FIELD,
 } from "./actionTypes";
 
-export const searchNewsRequest = (search) => ({
+export const searchNewsRequest = () => ({
   type: SEARCH_NEWS_REQUEST,
-  payload: { search },
 });
 
 export const searchNewsFailure = (error) => ({

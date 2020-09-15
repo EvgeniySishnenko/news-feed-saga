@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-import { searchNewsSuccess } from "./actions/actionCreators";
+import { useDispatch } from "react-redux";
+import { searchNewsSuccess, searchNewsRequest } from "./actions/actionCreators";
 
 import Newsfeed from "./Newsfeed/Newsfeed";
 function App() {
-  const { items, loading, error, search } = useSelector((state) => state.news);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(searchNewsSuccess());
+    dispatch(searchNewsRequest());
   }, []);
   function btnMore(e) {
     e.preventDefault();

@@ -8,10 +8,9 @@ const initialState = {
   items: [],
   loading: false,
   error: null,
-  search: "",
 };
 
-export default function skillsReducer(state = initialState, action) {
+export default function newsReducer(state = initialState, action) {
   switch (action.type) {
     case SEARCH_NEWS_REQUEST:
       return {

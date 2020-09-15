@@ -1,4 +1,4 @@
-import { put, spawn, call, takeEvery, delay } from "redux-saga/effects";
+import { put, spawn, call, takeEvery, delay, fork } from "redux-saga/effects";
 import {
   searchNewsRequest,
   searchNewsSuccess,
@@ -16,14 +16,13 @@ export function* workerLoadData() {
     const data = yield call(searchNews);
     yield put(searchNewsSuccess(data));
   } catch (error) {
-    yield call(workerLoadData);
     // return yield delay(100);
+    yield call(workerLoadData);
   }
 }
 
-// watcher
 export function* watchLoadData() {
-  yield takeEvery(SEARCH_NEWS_SUCCESS, workerLoadData);
+  yield takeEvery(SEARCH_NEWS_REQUEST, workerLoadData);
 }
 
 export default function* saga() {
