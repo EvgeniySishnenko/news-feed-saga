@@ -18,9 +18,9 @@ function App() {
     <div className="App">
       <Container>
         <h1 className="text-center mt-2">News feed</h1>
-        <Row className="justify-content-center mt-5">
+        <div className="mt-5">
           <Newsfeed />
-        </Row>
+        </div>
         <Row className="justify-content-center mt-5">
           <button onClick={btnMore} type="button" className="btn btn-success">
             Еще
